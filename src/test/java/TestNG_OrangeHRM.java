@@ -21,6 +21,7 @@ public class TestNG_OrangeHRM {
     int initialsize;
     int updatedsize;
     int difference = 0;
+
     WebDriver driver = null;
 
     @BeforeMethod
@@ -33,7 +34,7 @@ public class TestNG_OrangeHRM {
     }
 
 
-    @Test
+    @Test(priority = 0)
     public void addMapNews() throws InterruptedException {
         loginAsAdmin();
         driver.findElement(By.xpath("//a//span[text()='Admin']")).click();
@@ -78,8 +79,9 @@ public class TestNG_OrangeHRM {
 
     }
 
-    @Test
+    @Test (priority = 1)
     public void addNewsitems() throws InterruptedException{
+
         loginAsAdmin();
         driver.findElement(By.xpath("//a//span[text()='Admin']")).click();
         driver.findElement(By.xpath("//li[@id='menu_news_Announcements']//span[text()='Announcements']")).click();
@@ -107,6 +109,7 @@ public class TestNG_OrangeHRM {
         Thread.sleep(3000);
         WebElement publishbtn = driver.findElement(By.xpath("//div/button[@btn-type='publish']"));
         publishbtn.click();
+        Thread.sleep(2000);
 
         List<WebElement> key = driver.findElements(By.xpath("//td/a[@class='newsTopic']"));
         System.out.println(key.size());
@@ -114,18 +117,80 @@ public class TestNG_OrangeHRM {
         //verify
         Assert.assertEquals(initialsize+difference, updatedsize, "Size of the table is not updated");
         String expectedtopic = "Congratulations UltimateNerds";
+        Thread.sleep(2000);
         String actualtopic = driver.findElement(By.xpath("//td/a[text()='Congratulations UltimateNerds']")).getText();
         System.out.println("actualtopic: " + actualtopic);
         Assert.assertEquals(actualtopic,expectedtopic);
     }
 
+    @Test (priority = 2)
+    public void verifyNewlyAdd() throws InterruptedException{
+        logIn1stLevelSupervisor();
+        WebElement announcements = driver.findElement(By.xpath("//span[text()='Announcements']"));
+        announcements.click();
+        WebElement news = driver.findElement(By.xpath("//span[text()='News']"));
+        news.click();
+        WebElement newsadd = driver.findElement(By.xpath("//div[contains(text(),'Congratulations UltimateNerds')]"));
+        Assert.assertEquals(newsadd.getText(),"Congratulations UltimateNerds");
 
-//     @AfterMethod
-//        public void tearDown(){
-//        driver.close();
-//        }
+        //Verifytopic
+        WebElement topic = driver.findElement(By.xpath("//div[contains(text(),'Congratulations UltimateNerds')]"));
+        String expectedtopic = "Congratulations UltimateNerds";
+        Assert.assertEquals(topic.getText(),expectedtopic);
+
+        //VerifyDes.
+        topic.click();
+        Thread.sleep(2000);
+        WebElement description = driver.findElement(By.xpath("//div[@class='tinymce-saved-content']//p[contains(text(),'UltimateNerds')]"));
+        String expectedDescription = "Promotion was awarded to UltimateNerds 08/10/2020";
+        System.out.println(description.getText());
+        Assert.assertEquals(description.getText(),expectedDescription);
+
+    }
+
+    @Test(priority = 3)
+    public void verifyDeleteNews() throws InterruptedException{
+
+        loginAsAdmin();
+        driver.findElement(By.xpath("//a//span[text()='Admin']")).click();
+        driver.findElement(By.xpath("//li[@id='menu_news_Announcements']//span[text()='Announcements']")).click();
+        driver.findElement(By.xpath("//a[@id='menu_news_viewNewsList']//span[text()='News']")).click();
+        driver.switchTo().parentFrame();
+        Thread.sleep(2000);
+        driver.switchTo().frame("noncoreIframe");
+        Thread.sleep(2000);
+        WebElement checkBox = driver.findElement(By.xpath("//td/a[contains(text(),'Congratulations UltimateNerds')]/../..//label"));
+        checkBox.click();
+        WebElement clickdot = driver.findElement(By.xpath("//th/a/i[@class='material-icons icons-color handCurser orange-text']"));
+        clickdot.click();
+        Thread.sleep(1000);
+        WebElement deletebtn = driver.findElement(By.xpath("//a[@id='newsDelete']"));
+
+        deletebtn.click();
+        WebElement confirmDlt = driver.findElement(By.xpath("//a[@id='news-delete-button']"));
+        confirmDlt.click();
+        Thread.sleep(2000);
+        List <WebElement> topicexist = driver.findElements(By.xpath("//td/a[contains(text(),'Congratulations UltimateNerds')]"));
+        //verify topic not exist after delete
+        Assert.assertEquals(topicexist.size(),0);
+        Thread.sleep(2000);
+
+        List<WebElement> key = driver.findElements(By.xpath("//td/a[@class='newsTopic']"));
+        System.out.println(key.size());
+        //verify table size is less by one
+        Assert.assertEquals(key.size(),updatedsize-difference);
+
+    }
+
+
+     @AfterMethod
+        public void tearDown() throws InterruptedException{
+        Thread.sleep(3000);
+        driver.quit();
+        }
+
         //separate medthod to use
-     //sepearate medthod for login
+        //sepearate medthod for login
 
         public void loginAsAdmin() {
 
@@ -133,11 +198,12 @@ public class TestNG_OrangeHRM {
         login.click();
         WebElement admin = driver.findElement(By.xpath("(//a[@class='login-as'])[2]"));
         admin.click();
+
         }
 
         //sepearate medthod for login
 
-        public void logIn1stLevelSupervisor() throws InterruptedException{
+        public void logIn1stLevelSupervisor() {
             WebElement login = driver.findElement(By.xpath("//button[@class='btn btn-primary dropdown-toggle']"));
             login.click();
             WebElement levelSupervisor = driver.findElement(By.xpath("//a[text()='1st Level Supervisor']"));
