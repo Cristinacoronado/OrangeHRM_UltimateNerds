@@ -113,15 +113,19 @@ public class TestNG_OrangeHRM {
         updatedsize = key.size();
         //verify
         Assert.assertEquals(initialsize+difference, updatedsize, "Size of the table is not updated");
-
+        String expectedtopic = "Congratulations UltimateNerds";
+        String actualtopic = driver.findElement(By.xpath("//td/a[text()='Congratulations UltimateNerds']")).getText();
+        System.out.println("actualtopic: " + actualtopic);
+        Assert.assertEquals(actualtopic,expectedtopic);
     }
 
 
-     @AfterMethod
-        public void tearDown(){
-        driver.close();
-        }
+//     @AfterMethod
+//        public void tearDown(){
+//        driver.close();
+//        }
         //separate medthod to use
+     //sepearate medthod for login
 
         public void loginAsAdmin() {
 
@@ -131,7 +135,7 @@ public class TestNG_OrangeHRM {
         admin.click();
         }
 
-        //
+        //sepearate medthod for login
 
         public void logIn1stLevelSupervisor() throws InterruptedException{
             WebElement login = driver.findElement(By.xpath("//button[@class='btn btn-primary dropdown-toggle']"));
