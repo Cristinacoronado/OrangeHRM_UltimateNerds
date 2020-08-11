@@ -21,7 +21,6 @@ public class TestNG_OrangeHRM {
     int initialsize;
     int updatedsize;
     int difference = 0;
-
     WebDriver driver = null;
 
     @BeforeMethod
@@ -114,10 +113,11 @@ public class TestNG_OrangeHRM {
         List<WebElement> key = driver.findElements(By.xpath("//td/a[@class='newsTopic']"));
         System.out.println(key.size());
         updatedsize = key.size();
-        //verify
+        //verify if size of table increased after added
         Assert.assertEquals(initialsize+difference, updatedsize, "Size of the table is not updated");
         String expectedtopic = "Congratulations UltimateNerds";
         Thread.sleep(2000);
+        //verify if new news is displayed on table
         String actualtopic = driver.findElement(By.xpath("//td/a[text()='Congratulations UltimateNerds']")).getText();
         System.out.println("actualtopic: " + actualtopic);
         Assert.assertEquals(actualtopic,expectedtopic);
@@ -130,6 +130,7 @@ public class TestNG_OrangeHRM {
         announcements.click();
         WebElement news = driver.findElement(By.xpath("//span[text()='News']"));
         news.click();
+        //verify if new news is added to this section
         WebElement newsadd = driver.findElement(By.xpath("//div[contains(text(),'Congratulations UltimateNerds')]"));
         Assert.assertEquals(newsadd.getText(),"Congratulations UltimateNerds");
 
@@ -171,13 +172,14 @@ public class TestNG_OrangeHRM {
         confirmDlt.click();
         Thread.sleep(2000);
         List <WebElement> topicexist = driver.findElements(By.xpath("//td/a[contains(text(),'Congratulations UltimateNerds')]"));
-        //verify topic not exist after delete
+
+        //verify item not exist after delete
         Assert.assertEquals(topicexist.size(),0);
         Thread.sleep(2000);
 
         List<WebElement> key = driver.findElements(By.xpath("//td/a[@class='newsTopic']"));
         System.out.println(key.size());
-        //verify table size is less by one
+        //verify table size is less by one after delete
         Assert.assertEquals(key.size(),updatedsize-difference);
 
     }
@@ -189,8 +191,8 @@ public class TestNG_OrangeHRM {
         driver.quit();
         }
 
-        //separate medthod to use
-        //sepearate medthod for login
+
+        //sepearate medthod for login1
 
         public void loginAsAdmin() {
 
@@ -201,7 +203,7 @@ public class TestNG_OrangeHRM {
 
         }
 
-        //sepearate medthod for login
+        //sepearate medthod for login2
 
         public void logIn1stLevelSupervisor() {
             WebElement login = driver.findElement(By.xpath("//button[@class='btn btn-primary dropdown-toggle']"));
