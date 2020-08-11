@@ -185,50 +185,31 @@ public class TestNG_OrangeHRM {
     }
 
 
-     @AfterMethod
-        public void tearDown() throws InterruptedException{
+    @AfterMethod
+    public void tearDown() throws InterruptedException{
         Thread.sleep(3000);
         driver.quit();
-        }
+    }
 
+        //login medthod
 
-        //sepearate medthod for login1
-
-//        public void loginAsAdmin() {
-//
-//        WebElement login = driver.findElement(By.xpath("//button[@class='btn btn-primary dropdown-toggle']"));
-//        login.click();
-//        WebElement admin = driver.findElement(By.xpath("(//a[@class='login-as'])[2]"));
-//        admin.click();
-//
-//        }
-//
-//        //sepearate medthod for login2
-//
-//        public void logIn1stLevelSupervisor() {
-//            WebElement login = driver.findElement(By.xpath("//button[@class='btn btn-primary dropdown-toggle']"));
-//            login.click();
-//            WebElement firstlevelSupervisor = driver.findElement(By.xpath("//a[text()='1st Level Supervisor']"));
-//            firstlevelSupervisor.click();
-//        }
-
-        public void logIn(String a){
-             if(a.equalsIgnoreCase("Admin")){
+    public void logIn(String a){
+        if(a.equalsIgnoreCase("Admin")){
             WebElement login = driver.findElement(By.xpath("//button[@class='btn btn-primary dropdown-toggle']"));
             login.click();
             WebElement admin = driver.findElement(By.xpath("(//a[@class='login-as'])[2]"));
             admin.click();
-            } else if
-             (a.equalsIgnoreCase("1stLevelSupervisor")){
+        } else if
+            (a.equalsIgnoreCase("1stLevelSupervisor")){
             WebElement login = driver.findElement(By.xpath("//button[@class='btn btn-primary dropdown-toggle']"));
             login.click();
             WebElement firstlevelSupervisor = driver.findElement(By.xpath("//a[text()='1st Level Supervisor']"));
             firstlevelSupervisor.click();
-            } else {
+        } else {
             System.out.println("User is not allowed ");
         }
 
-        }
+    }
 
 
 
