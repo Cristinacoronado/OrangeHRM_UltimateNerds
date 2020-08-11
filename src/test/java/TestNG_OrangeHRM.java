@@ -35,7 +35,7 @@ public class TestNG_OrangeHRM {
 
     @Test(priority = 0)
     public void addMapNews() throws InterruptedException {
-        loginAsAdmin();
+        logIn("Admin");
         driver.findElement(By.xpath("//a//span[text()='Admin']")).click();
         driver.findElement(By.xpath("//li[@id='menu_news_Announcements']//span[text()='Announcements']")).click();
         driver.findElement(By.xpath("//a[@id='menu_news_viewNewsList']//span[text()='News']")).click();
@@ -81,7 +81,7 @@ public class TestNG_OrangeHRM {
     @Test (priority = 1)
     public void addNewsitems() throws InterruptedException{
 
-        loginAsAdmin();
+        logIn("Admin");
         driver.findElement(By.xpath("//a//span[text()='Admin']")).click();
         driver.findElement(By.xpath("//li[@id='menu_news_Announcements']//span[text()='Announcements']")).click();
         driver.findElement(By.xpath("//a[@id='menu_news_viewNewsList']//span[text()='News']")).click();
@@ -125,7 +125,7 @@ public class TestNG_OrangeHRM {
 
     @Test (priority = 2)
     public void verifyNewlyAdd() throws InterruptedException{
-        logIn1stLevelSupervisor();
+        logIn("1stLevelSupervisor");
         WebElement announcements = driver.findElement(By.xpath("//span[text()='Announcements']"));
         announcements.click();
         WebElement news = driver.findElement(By.xpath("//span[text()='News']"));
@@ -152,7 +152,7 @@ public class TestNG_OrangeHRM {
     @Test(priority = 3)
     public void verifyDeleteNews() throws InterruptedException{
 
-        loginAsAdmin();
+        logIn("Admin");
         driver.findElement(By.xpath("//a//span[text()='Admin']")).click();
         driver.findElement(By.xpath("//li[@id='menu_news_Announcements']//span[text()='Announcements']")).click();
         driver.findElement(By.xpath("//a[@id='menu_news_viewNewsList']//span[text()='News']")).click();
@@ -194,22 +194,40 @@ public class TestNG_OrangeHRM {
 
         //sepearate medthod for login1
 
-        public void loginAsAdmin() {
+//        public void loginAsAdmin() {
+//
+//        WebElement login = driver.findElement(By.xpath("//button[@class='btn btn-primary dropdown-toggle']"));
+//        login.click();
+//        WebElement admin = driver.findElement(By.xpath("(//a[@class='login-as'])[2]"));
+//        admin.click();
+//
+//        }
+//
+//        //sepearate medthod for login2
+//
+//        public void logIn1stLevelSupervisor() {
+//            WebElement login = driver.findElement(By.xpath("//button[@class='btn btn-primary dropdown-toggle']"));
+//            login.click();
+//            WebElement firstlevelSupervisor = driver.findElement(By.xpath("//a[text()='1st Level Supervisor']"));
+//            firstlevelSupervisor.click();
+//        }
 
-        WebElement login = driver.findElement(By.xpath("//button[@class='btn btn-primary dropdown-toggle']"));
-        login.click();
-        WebElement admin = driver.findElement(By.xpath("(//a[@class='login-as'])[2]"));
-        admin.click();
-
-        }
-
-        //sepearate medthod for login2
-
-        public void logIn1stLevelSupervisor() {
+        public void logIn(String a){
+             if(a.equalsIgnoreCase("Admin")){
             WebElement login = driver.findElement(By.xpath("//button[@class='btn btn-primary dropdown-toggle']"));
             login.click();
-            WebElement levelSupervisor = driver.findElement(By.xpath("//a[text()='1st Level Supervisor']"));
-            levelSupervisor.click();
+            WebElement admin = driver.findElement(By.xpath("(//a[@class='login-as'])[2]"));
+            admin.click();
+            } else if
+             (a.equalsIgnoreCase("1stLevelSupervisor")){
+            WebElement login = driver.findElement(By.xpath("//button[@class='btn btn-primary dropdown-toggle']"));
+            login.click();
+            WebElement firstlevelSupervisor = driver.findElement(By.xpath("//a[text()='1st Level Supervisor']"));
+            firstlevelSupervisor.click();
+            } else {
+            System.out.println("User is not allowed ");
+        }
+
         }
 
 
