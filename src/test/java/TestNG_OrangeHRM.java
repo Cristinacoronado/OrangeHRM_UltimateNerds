@@ -1,5 +1,4 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-//import jdk.jfr.Description;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,7 +12,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.Assertion;
 
 import javax.swing.*;
-//import javax.xml.ws.Action;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -143,7 +141,7 @@ public class TestNG_OrangeHRM {
         }
 
     @AfterMethod
-    public void tearDown() throws InterruptedException{
+    public void tearDown() {
         driver.quit();
     }
 
